@@ -7,6 +7,10 @@ const express = require('express')
 const notFoundErrorMiddleware = require('./middlewares/notFound')
 const errorHandlerMiddleware = require('./middlewares/errorHandler')
 
+//import routes
+const authRouter = require('./routes/authRoute')
+
+
 //database
 const connectDB = require('./db/connectdb')
 
@@ -16,9 +20,8 @@ const app = express()
 app.use(express.json());
 
 //Routes
-app.get('/', (req, res) => {
-    res.send('Oya eyin temi')
-})
+app.get('/', (req, res) => res.send('Oya eyin temi'))
+app.use('/api/v1/auth', authRouter)
 
 //middlewares
 app.use(notFoundErrorMiddleware)
