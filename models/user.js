@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const validator = require('validator')
+
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -11,7 +13,11 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: [true, 'Please Provide your Email']
+        required: [true, 'Please Provide your Email'],
+        validate: {
+            validator: validator.isEmail,
+            message: 'Please provide a valid email'
+        }
     },
     description: {
         type: String,
@@ -23,15 +29,15 @@ const userSchema = new mongoose.Schema({
     },
     state: {
         type: String,
-        required: [true, 'Please Provide ']
+        required: [true, 'Please Provide your State']
     },
     city: {
         type: String,
-        required: [true, 'Please Provide your First Name']
+        required: [true, 'Please Provide your city']
     },
     zip: {
         type: String,
-        required: [true, 'Please Provide your First Name']
+        required: [true, 'Please Provide your zip code'],
     },
     password: {
         type: String,
@@ -56,9 +62,8 @@ const userSchema = new mongoose.Schema({
     twitter: {
         type: String,
         required: [true, 'Please Provide your twitter link']
-    },
-    
-});
+    },  
+}, {timestamps: true});
 
 const User = mongoose.model('User', userSchema);
 
