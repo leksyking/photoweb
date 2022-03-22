@@ -1,7 +1,7 @@
 const User = require('../models/user')
 const {StatusCodes} = require('http-status-codes')
 const { BadRequestError } = require('../errors')
-const {createTokenUser} = require('../utils')
+const {createTokenUser, attachCookiesToResponse} = require('../utils')
 
 const register = async(req, res) => {
     const {email} = req.body;
@@ -13,6 +13,7 @@ const register = async(req, res) => {
     //create a new user
     const user = await User.create(req.body)
     const tokenUser = createTokenUser(user);
+    
     res.status(StatusCodes.CREATED).json({tokenUser})
 }
 
