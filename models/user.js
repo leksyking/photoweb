@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
+const findOrCreate = require('mongoose-findorcreate')
+
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -63,7 +65,8 @@ const userSchema = new mongoose.Schema({
     twitter: {
         type: String,
         required: [true, 'Please Provide your twitter link']
-    },  
+    },
+    googleId: String  
 }, {timestamps: true});
 
 userSchema.pre('save', async function(){
@@ -75,7 +78,8 @@ userSchema.pre('save', async function(){
 userSchema.methods.comparePassword = async function(enteredPassword){
     const isMatch = await bcrypt.compare(enteredPassword, this.password)
     return isMatch
-}
+};
+userSchema.plugin(findOrCreate);
 
 const User = mongoose.model('User', userSchema);
 

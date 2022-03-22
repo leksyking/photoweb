@@ -3,6 +3,23 @@ const {StatusCodes} = require('http-status-codes')
 const { BadRequestError } = require('../errors')
 const {createTokenUser, attachCookiesToResponse} = require('../utils')
 const notFoundError = require('../middlewares/notFound')
+const passport = require('passport')
+
+
+
+// app.get('/auth/google',
+//   passport.authenticate('google', { scope: ['profile'] }));
+
+// app.get('/auth/google/callback', 
+//   passport.authenticate('google', { failureRedirect: '/login' }),
+//   function(req, res) {
+//     // Successful authentication, redirect home.
+//     res.redirect('/');
+//   });
+
+
+
+  const google = passport.authenticate('google', { scope: ['profile'] });
 
 const register = async(req, res) => {
     const {email} = req.body;
@@ -38,7 +55,7 @@ const login = async(req, res) => {
 }
 
 const logout = async(req, res) => {
-    res.cookie('logout', {
+    res.cookie('token', 'logout', {
         httpOnly: true,
         expires: new Date(Date.now() + 1000)
     })
@@ -48,5 +65,6 @@ const logout = async(req, res) => {
 module.exports = {
     register,
     login,
-    logout
+    logout,
+    google
 }
