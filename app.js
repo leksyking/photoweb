@@ -3,6 +3,9 @@ require('dotenv').config();
 
 const express = require('express')
 
+//import packages
+const cookieParser = require('cookie-parser')
+
 //import middlewares
 const notFoundErrorMiddleware = require('./middlewares/notFound')
 const errorHandlerMiddleware = require('./middlewares/errorHandler')
@@ -18,14 +21,16 @@ const app = express()
 
 //middlewares
 app.use(express.json());
+app.use(cookieParser(process.env.COOKIE_ENV))
 
 //Routes
 app.get('/', (req, res) => res.send('Oya eyin temi'))
 app.use('/api/v1/auth', authRouter)
 
 //middlewares
-app.use(notFoundErrorMiddleware)
 app.use(errorHandlerMiddleware)
+app.use(notFoundErrorMiddleware)
+
 
 
 const port = 3000 || process.env.PORT;

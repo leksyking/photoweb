@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
-
+const bcrypt = require('bcryptjs')
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, 'Please Provide your Email'],
+        unique: true,
         validate: {
             validator: validator.isEmail,
             message: 'Please provide a valid email'
@@ -64,6 +65,12 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Please Provide your twitter link']
     },  
 }, {timestamps: true});
+
+userSchema.pre('save', async function(){
+    if(!this.isModified('password')) return;
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt)
+})
 
 const User = mongoose.model('User', userSchema);
 
