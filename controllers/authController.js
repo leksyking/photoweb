@@ -2,6 +2,7 @@ const User = require('../models/user')
 const {StatusCodes} = require('http-status-codes')
 const { BadRequestError } = require('../errors')
 const {createTokenUser, attachCookiesToResponse} = require('../utils')
+const notFoundError = require('../middlewares/notFound')
 
 const register = async(req, res) => {
     const {email} = req.body;
@@ -13,12 +14,27 @@ const register = async(req, res) => {
     //create a new user
     const user = await User.create(req.body)
     const tokenUser = createTokenUser(user);
-    
+    attachCookiesToResponse({res, user: tokenUser})
     res.status(StatusCodes.CREATED).json({tokenUser})
 }
 
 const login = async(req, res) => {
-    res.send('login Users')
+    const {email, password} = req.body;
+    if(!email || !password){
+        throw new BadRequestError('Please provide your email and password')
+    }
+    const user = await User.findOne({email})
+    if(!user){
+        throw new notFoundError("Invalid Email");
+    }
+    const isPassword = user.comparePassword(password)
+    if(!isPassword){
+        throw new BadRequestError('invalid password')
+    }
+
+    const tokenUser = createTokenUser(user);
+    attachCookiesToResponse({res, user: tokenUser})
+    res.status(StatusCodes.CREATED).json({tokenUser})
 }
 
 const logout = async(req, res) => {

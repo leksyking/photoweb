@@ -13,4 +13,20 @@
     "password":"Felix",
     "description":"Felix",
     "shootDetails":"Felix"
+},
+{
+    "firstName":"Felix",
+    "lastName":"Ogundipe",
+    "username":"Leksyking",
+    "email":"gebemilekeogundipe@gmail.com",
+    "zip":"23401",
+    "state":"Osun",
+    "whatsapp":"Felix",
+    "city":"ife",
+    "facebook":"Felix",
+    "twitter":"Felix",
+    "linkedIn":"Felix",
+    "password":"password",
+    "description":"fine bobo",
+    "shootDetails":["street", "corporate"]
 }
