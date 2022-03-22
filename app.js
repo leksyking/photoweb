@@ -1,7 +1,10 @@
 require('express-async-errors');
 require('dotenv').config();
 
+//require express
 const express = require('express')
+
+const app = express()
 
 //import packages
 const cookieParser = require('cookie-parser')
@@ -17,12 +20,11 @@ const errorHandlerMiddleware = require('./middlewares/errorHandler')
 const authRouter = require('./routes/authRoute')
 
 
-
 //database
 const connectDB = require('./db/connectdb')
 
-const app = express()
 
+app.use(express.urlencoded({extended: true}))
 app.use(session({
     secret: 'eksy',
     resave: false,
@@ -31,11 +33,10 @@ app.use(session({
       mongoUrl: process.env.MONGO_URL,
       collectionName: 'sessions'
     }),
-    cookie: { secure: false,
-      maxAge: 1000 * 60 * 60 * 24 }
 }))
 app.use(passport.initialize());
 app.use(passport.session());
+
 //google strategy
 require('./passport/google')
 
@@ -45,16 +46,13 @@ app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_ENV))
 
 
-
-
 //Routes
-app.get('/', (req, res) => res.send('Oya eyin temi'))
+app.get('/', (req, res) => res.send('Well done bro'));
 app.use('/api/v1/auth', authRouter)
 
 //middlewares
 app.use(errorHandlerMiddleware)
 app.use(notFoundErrorMiddleware)
-
 
 
 const port = 3000 || process.env.PORT;

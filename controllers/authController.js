@@ -6,20 +6,13 @@ const notFoundError = require('../middlewares/notFound')
 const passport = require('passport')
 
 
+const google = passport.authenticate('google', { scope: ['profile'] });
 
-// app.get('/auth/google',
-//   passport.authenticate('google', { scope: ['profile'] }));
-
-// app.get('/auth/google/callback', 
-//   passport.authenticate('google', { failureRedirect: '/login' }),
-//   function(req, res) {
-//     // Successful authentication, redirect home.
-//     res.redirect('/');
-//   });
-
-
-
-  const google = passport.authenticate('google', { scope: ['profile'] });
+const googleNext = passport.authenticate('google', { failureRedirect: '/login' })
+const funcNext =  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect("/secrets");
+};
 
 const register = async(req, res) => {
     const {email} = req.body;
@@ -66,5 +59,7 @@ module.exports = {
     register,
     login,
     logout,
-    google
+    google,
+    googleNext,
+    funcNext
 }
