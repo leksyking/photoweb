@@ -5,13 +5,13 @@ const {createTokenUser, attachCookiesToResponse} = require('../utils')
 const notFoundError = require('../middlewares/notFound')
 const passport = require('passport')
 
-
+//google controller
 const google = passport.authenticate('google', { scope: ['profile'] });
 
 const googleNext = passport.authenticate('google', { failureRedirect: '/login' })
 const funcNext =  function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect("/secrets");
+    res.redirect('/');
 };
 
 const register = async(req, res) => {
@@ -37,7 +37,7 @@ const login = async(req, res) => {
     if(!user){
         throw new notFoundError("Invalid Email");
     }
-    const isPassword = user.comparePassword(password)
+    const isPassword = await user.comparePassword(password)
     if(!isPassword){
         throw new BadRequestError('invalid password')
     }

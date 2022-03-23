@@ -3,7 +3,8 @@ const { isTokenValid } = require("../utils");
 
 const authenticationMiddleware = (req, res, next) => {
     try {
-        let token = req.signedCookies;
+        let {token} = req.signedCookies;
+
         if(!token){
             throw new UnAuthenticatedError('Authentication failed')
         }

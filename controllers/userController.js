@@ -1,21 +1,52 @@
-const User = require('../models/user')
+const { StatusCodes } = require('http-status-codes');
+const {NotFoundError, BadRequestError, UnAuthenticatedError} = require('../errors');
+const User = require('../models/user');
+const { createTokenUser, attachCookiesToResponse, checkPermission } = require('../utils');
 
 
 const getSingleUser = async (req, res) => {
+    const {id: userId} = req.params;
+    const user = await User.find({_id:userId}).select('-password')
+    if(!user){
+        throw new NotFoundError(`No user with id: ${userId}`)
+    }
+    checkPermission(req.user, userId)
+    res.status(StatusCodes.OK).json({user})
+};
 
-    res.send('photo created')
+const getCurrentUser = async (req, res) => {
+    res.status(StatusCodes.OK).json(req.user)
 }
 
 const updateUser = async (req, res) => {
-    res.send('photo created')
+    const user = await User.findOneAndUpdate({_id: req.user.userId}, req.body, {new: true, runValidators: true})
+    console.log(user);
+    const tokenUser = createTokenUser(user);
+    attachCookiesToResponse({res, user: tokenUser})
+    res.status(StatusCodes.OK).json({tokenUser})
 }
+
 const updateUserPassword = async (req, res) => {
-    res.send('photo created')
+    const {oldPassword, newPassword}= req.body;
+    if(!oldPassword || !newPassword){
+        throw new BadRequestError('Please provide the required passwords')
+    }
+    const user = await User.findOne({_id: req.user.userId})
+    const isPassword = await user.comparePassword(oldPassword)
+    console.log(isPassword);
+    if(!isPassword){
+        throw new UnAuthenticatedError("Incorrect Password")
+    }
+    user.password = newPassword;
+    await user.save();
+    res.status(StatusCodes.OK).json("Password changed successfully")
 }
 
 
 module.exports = {
-    getSingleUser,
+  
+    getCurrentUser,
     updateUser,
-    updateUserPassword
+    updateUserPassword,
+    getSingleUser,
 }

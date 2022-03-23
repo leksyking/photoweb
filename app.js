@@ -18,6 +18,7 @@ const errorHandlerMiddleware = require('./middlewares/errorHandler')
 
 //import routes
 const authRouter = require('./routes/authRoute')
+const userRouter = require('./routes/userRoute')
 
 
 //database
@@ -49,6 +50,7 @@ app.use(cookieParser(process.env.COOKIE_ENV))
 //Routes
 app.get('/', (req, res) => res.send('Well done bro'));
 app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/user', userRouter)
 
 //middlewares
 app.use(errorHandlerMiddleware)

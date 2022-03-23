@@ -23,48 +23,39 @@ const userSchema = new mongoose.Schema({
         }
     },
     description: {
-        type: String,
-        required: [true, 'Please Provide the description']
+        type: String
     },
     username: {
         type: String,
         required: [true, 'Please Provide your Username']
     },
     state: {
-        type: String,
-        required: [true, 'Please Provide your State']
+        type: String
     },
     city: {
-        type: String,
-        required: [true, 'Please Provide your city']
+        type: String
     },
     zip: {
-        type: String,
-        required: [true, 'Please Provide your zip code'],
+        type: String
     },
     password: {
         type: String,
         required: [true, 'Please Provide your password']
     },
     shootDetails: {
-        type: [],
-        required: [true, 'Please pick your shoot details']
+        type: []
     },
     whatsapp: {
-        type: String,
-        required: [true, 'Please Provide your whatsapp link']
+        type: String
     },
     facebook: {
-        type: String,
-        required: [true, 'Please Provide your facebook link']
+        type: String
     },
     linkedIn: {
-        type: String,
-        required: [true, 'Please Provide your linkedIn link']
+        type: String
     },
     twitter: {
-        type: String,
-        required: [true, 'Please Provide your twitter link']
+        type: String
     },
     googleId:{
         type: String,
