@@ -1,6 +1,8 @@
 const Photo = require('../models/photographs')
 const {StatusCodes} = require('http-status-codes');
 const { checkPermission } = require('../utils');
+const { BadRequestError } = require('../errors');
+const path = require('path')
 
 const createPhoto = async (req, res) => { 
     req.body.user = req.user.userId;
@@ -25,10 +27,24 @@ const getAllPhotos = async (req, res) => {
     const photo = await Photo.find({})
     res.status(StatusCodes.OK).json({photo, nbHits: photo.length})
 }
+
 const uploadPhoto = async (req, res) => {
-    console.log(req.files);
-    res.status(StatusCodes.OK).json(ok)
+    if(!req.files){
+        throw BadRequestError('Please upload a file')
+    }
+    const uploadedFile = req.files.image;
+    if(!uploadedFile.mimetype.startsWith('image')){
+        throw BadRequestError('Please upload a valid image')
+    }
+    const maxSize = 1024 * 1024;
+    if(uploadedFile.size > maxSize){
+        throw new BadRequestError('Image should not be more than 1MB')
+    }
+    const imagePath = path.join(__dirname, '../public/uploads/' + `${uploadedFile.name}`)
+    await uploadedFile.mv(imagePath)
+    res.status(StatusCodes.OK).json({image: `/uploads/${uploadedFile.name}`})
 }
+
 const updatePhoto = async (req, res) => {
     const {image, name, description, category } = req.body;
     const {id: photoId} = req.params;
@@ -41,6 +57,7 @@ const updatePhoto = async (req, res) => {
     await photo.save()
     res.status(StatusCodes.OK).json({photo})
 }
+
 const deletePhoto = async (req, res) => { 
     const {id: photoId} = req.params;
     const photo = await Photo.findById(photoId)
