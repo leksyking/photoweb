@@ -8,6 +8,7 @@ const app = express()
 
 //import packages
 const cookieParser = require('cookie-parser')
+const uploadFile = require('express-fileupload');
 const passport = require('passport')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
@@ -19,6 +20,7 @@ const errorHandlerMiddleware = require('./middlewares/errorHandler')
 //import routes
 const authRouter = require('./routes/authRoute')
 const userRouter = require('./routes/userRoute')
+const photoRouter = require('./routes/photoRoute')
 
 
 //database
@@ -45,12 +47,14 @@ require('./passport/google')
 app.use(express.static('./public'))
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_ENV))
+app.use(uploadFile())
 
 
 //Routes
 app.get('/', (req, res) => res.send('Well done bro'));
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/user', userRouter)
+app.use('/api/v1/photo', photoRouter)
 
 //middlewares
 app.use(errorHandlerMiddleware)
