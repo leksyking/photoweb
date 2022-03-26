@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+
 const { deletePhoto, createPhoto, getSinglePersonPhotos, getSinglePhoto, uploadPhoto, getAllPhotos, updatePhoto } = require('../controllers/photoController');
 const authenticationMiddleware = require('../middlewares/authentication')
 
