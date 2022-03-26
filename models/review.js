@@ -7,6 +7,11 @@ const reviewSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'User',
         required: true
+    },
+    photographer:{
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+        required: true
     }
 });
 

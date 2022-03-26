@@ -1,13 +1,24 @@
 const Review = require('../models/review')
 const {checkPermission}  = require('../utils')
+const User = require('../models/user');
+const { BadRequestError } = require('../errors');
 
 const createReview = async (req, res) => {
+    const {photographer: photographerId } = req.body;
+    const validPhotographer = await User.findOne({_id: photographerId});
+    if(!validPhotographer){
+        throw new BadRequestError(`No user with id: ${photographerId}`)
+    }
+    const validReview = await Review.findOne({user: req.user.userId, photographer: photographerId})
+    if(validReview){
+        throw new BadRequestError('You submitted a review already')
+    }
     req.body.user = req.user.userId;
     const review = await Review.create(req.body)
     res.status(StatusCodes.CREATED).json({review})
 }
-const getAllReviews = async (req, res) => {
-    const review = await Review.find({user: req.user.userId})
+const getAllReviewsForAPhotographer = async (req, res) => {
+    const review = await Review.find({photographer: photographerId})
     res.status(StatusCodes.OK).json({review})
 }
 const getSingleReview = async (req, res) => {
@@ -17,9 +28,13 @@ const getSingleReview = async (req, res) => {
 }
 
 const updateReview = async (req, res) => {
+    const {rating, comment} = req.body;
     const {id: ReviewId} = req.params
-    const review = await Review.findById(ReviewId, req.body, {runValidators: true, new: true})
+    const review = await Review.findById(ReviewId)
     checkPermission(req.user, review.user);
+    review.rating = rating;
+    review.comment = comment;
+    await review.save()
     res.status(StatusCodes.OK).json({review})
 }
 const deleteReview = async (req, res) => {
@@ -32,7 +47,7 @@ const deleteReview = async (req, res) => {
 
 module.exports = {
     createReview,
-    getAllReviews,
+    getAllReviewsForAPhotographer,
     getSingleReview,
     updateReview,
     deleteReview

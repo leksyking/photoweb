@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const {getAllReviews, getSingleReview, createReview, updateReview, deleteReview} = require('../controllers/reviewController')
+const {getAllReviewsForAPhotographer, getSingleReview, createReview, updateReview, deleteReview} = require('../controllers/reviewController')
 const authenticationMiddleware = require('../middlewares/authentication')
 
 router.route('/')
-.get(getAllReviews)
+.get(getAllReviewsForAPhotographer)
 .post(authenticationMiddleware, createReview)
 router.route('/:id')
 .patch(authenticationMiddleware, updateReview)
