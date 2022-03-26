@@ -60,7 +60,13 @@ const userSchema = new mongoose.Schema({
     googleId:{
         type: String,
         unique: true  
-    } 
+    },
+    createdEvents: [
+    {
+        type: mongoose.Types.ObjectId,
+        ref: 'Event'
+    }
+    ] 
 }, {timestamps: true});
 
 userSchema.pre('save', async function(){
