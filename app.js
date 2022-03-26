@@ -21,7 +21,7 @@ const errorHandlerMiddleware = require('./middlewares/errorHandler')
 const authRouter = require('./routes/authRoute')
 const userRouter = require('./routes/userRoute')
 const photoRouter = require('./routes/photoRoute')
-
+const reviewRouter = require('./routes/reviewRoute')
 
 //database
 const connectDB = require('./db/connectdb')
@@ -55,6 +55,7 @@ app.get('/', (req, res) => res.send('Well done bro'));
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/photo', photoRouter)
+app.use('/api/v1/review', reviewRouter)
 
 //middlewares
 app.use(errorHandlerMiddleware)

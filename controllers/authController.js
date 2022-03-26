@@ -1,8 +1,7 @@
 const User = require('../models/user')
 const {StatusCodes} = require('http-status-codes')
-const { BadRequestError } = require('../errors')
+const { BadRequestError, NotFoundError } = require('../errors')
 const {createTokenUser, attachCookiesToResponse} = require('../utils')
-const notFoundError = require('../middlewares/notFound')
 const passport = require('passport')
 
 //google controller
@@ -35,7 +34,7 @@ const login = async(req, res) => {
     }
     const user = await User.findOne({email})
     if(!user){
-        throw new notFoundError("Invalid Email");
+        throw new NotFoundError("Invalid Email");
     }
     const isPassword = await user.comparePassword(password)
     if(!isPassword){
