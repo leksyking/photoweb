@@ -7,11 +7,6 @@ const createEvent = async (req, res) => {
     const event = await Event.create(req.body)
     res.status(StatusCodes.CREATED).json({event});
 }
-//optional
-const getAllEvents = async (req, res) => {
-    const event = await Event.find({})
-    res.status(StatusCodes.CREATED).json({event});
-}
 const getSingleEvent = async (req, res) => {
     const {id: eventId} = req.params;
     const event = await Event.findOne({_id: eventId})
@@ -27,19 +22,18 @@ const UpdateEvent = async (req, res) => {
     event.price = price;
     event.date = date;
     await event.save()
-    res.status(StatusCodes.CREATED).json({event});
+    res.status(StatusCodes.CREATED).json({msg: "Event updated"});
 }
 const deleteEvent = async (req, res) => {
     const {id: eventId} = req.params;
     const event = await Event.findOne({_id: eventId});
     checkPermission(req.user, event.createdBy);
     await event.remove();
-    res.status(StatusCodes.CREATED).json({event});
+    res.status(StatusCodes.CREATED).json({msg: "Event deleted"});
 }
 
 module.exports = {
     createEvent,
-    getAllEvents,
     getSingleEvent,
     UpdateEvent,
     deleteEvent

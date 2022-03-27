@@ -6,11 +6,11 @@ const { createTokenUser, attachCookiesToResponse, checkPermission } = require('.
 
 const getSingleUser = async (req, res) => {
     const {id: userId} = req.params;
-    const user = await User.findOne({_id:userId}).select('-password')
+    // try using populate to access all reviews
+    const user = await User.findOne({_id:userId}).populate({path: 'events reviews'}).select('-password')
     if(!user){
         throw new NotFoundError(`No user with id: ${userId}`)
     }
-    checkPermission(req.user, user._id)
     res.status(StatusCodes.OK).json({user})
 };
 

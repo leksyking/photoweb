@@ -2,6 +2,7 @@ const Review = require('../models/review')
 const {checkPermission}  = require('../utils')
 const User = require('../models/user');
 const { BadRequestError } = require('../errors');
+const {StatusCodes} = require('http-status-codes')
 
 const createReview = async (req, res) => {
     const {photographer: photographerId } = req.body;
@@ -17,10 +18,6 @@ const createReview = async (req, res) => {
     const review = await Review.create(req.body)
     res.status(StatusCodes.CREATED).json({review})
 }
-const getAllReviewsForAPhotographer = async (req, res) => {
-    const review = await Review.find({photographer: photographerId})
-    res.status(StatusCodes.OK).json({review})
-}
 const getSingleReview = async (req, res) => {
     const {id: ReviewId} = req.params
     const review = await Review.findById(ReviewId)
@@ -34,7 +31,7 @@ const updateReview = async (req, res) => {
     checkPermission(req.user, review.user);
     review.rating = rating;
     review.comment = comment;
-    await review.save()
+    await review.save();
     res.status(StatusCodes.OK).json({review})
 }
 const deleteReview = async (req, res) => {
@@ -47,7 +44,6 @@ const deleteReview = async (req, res) => {
 
 module.exports = {
     createReview,
-    getAllReviewsForAPhotographer,
     getSingleReview,
     updateReview,
     deleteReview
