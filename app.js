@@ -17,6 +17,9 @@ const uploadFile = require('express-fileupload');
 const passport = require('passport')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
+const cors = require('cors')
+const logger = require('morgan');
+const helmet = require('helmet')
 
 //import middlewares
 const notFoundErrorMiddleware = require('./middlewares/notFound')
@@ -55,7 +58,10 @@ app.use(express.static('./public'))
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_ENV))
 app.use(uploadFile())
-
+app.use(logger('dev'))
+//security
+app.use(cors());
+app.use(helmet())
 
 //Routes
 app.get('/', (req, res) => res.send('Well done bro'));
