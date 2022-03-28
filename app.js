@@ -22,7 +22,8 @@ const authRouter = require('./routes/authRoute')
 const userRouter = require('./routes/userRoute')
 const photoRouter = require('./routes/photoRoute')
 const reviewRouter = require('./routes/reviewRoute')
-const eventRouter = require('./routes/eventRoute')
+const bookingRouter = require('./routes/bookingRoute')
+
 
 //database
 const connectDB = require('./db/connectdb')
@@ -58,6 +59,7 @@ app.use('/api/v1/user', userRouter)
 app.use('/api/v1/photo', photoRouter)
 app.use('/api/v1/review', reviewRouter)
 app.use('/api/v1/event', eventRouter)
+app.use('/api/v1/booking', bookingRouter)
 
 //middlewares
 app.use(errorHandlerMiddleware)
