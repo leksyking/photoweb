@@ -1,4 +1,5 @@
 const Booking = require('../models/bookings')
+const Event = require('../models/event')
 const {StatusCodes} = require('http-status-codes')
 const {BadRequestError, NotFoundError} = require('../errors')
 const {checkPermission} = require('../utils')
