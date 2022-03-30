@@ -22,7 +22,7 @@ const getSingleReview = async (req, res) => {
     const {id: ReviewId} = req.params
     const review = await Review.findById(ReviewId)
     if(!review){
-        throw new NotFoundError(`No review wih id: ${reviewId}`)
+        throw new NotFoundError(`No review wih id: ${ReviewId}`)
     }
     res.status(StatusCodes.OK).json({review})
 }
@@ -32,7 +32,7 @@ const updateReview = async (req, res) => {
     const {id: ReviewId} = req.params
     const review = await Review.findById(ReviewId)
     if(!review){
-        throw new NotFoundError(`No review wih id: ${reviewId}`)
+        throw new NotFoundError(`No review wih id: ${ReviewId}`)
     }
     checkPermission(req.user, review.user);
     review.rating = rating;
@@ -44,7 +44,7 @@ const deleteReview = async (req, res) => {
     const {id: ReviewId} = req.params;
     const review = await Review.findById(ReviewId)
     if(!review){
-        throw new NotFoundError(`No review wih id: ${reviewId}`)
+        throw new NotFoundError(`No review wih id: ${ReviewId}`)
     }
     checkPermission(req.user, review.user);
     await review.remove();
