@@ -10,12 +10,18 @@ const createEvent = async (req, res) => {
 const getSingleEvent = async (req, res) => {
     const {id: eventId} = req.params;
     const event = await Event.findOne({_id: eventId})
+    if(!event){
+        throw new NotFoundError(`No event wih id: ${eventId}`)
+    }
     res.status(StatusCodes.CREATED).json({event});
 }
 const UpdateEvent = async (req, res) => {
     const {id: eventId} = req.params;
     const {title, description, price, date} = req.body;
     const event = await Event.findOne({_id: eventId});
+    if(!event){
+        throw new NotFoundError(`No event wih id: ${eventId}`)
+    }
     checkPermission(req.user, event.createdBy);
     event.title = title;
     event.description = description;
@@ -27,6 +33,9 @@ const UpdateEvent = async (req, res) => {
 const deleteEvent = async (req, res) => {
     const {id: eventId} = req.params;
     const event = await Event.findOne({_id: eventId});
+    if(!event){
+        throw new NotFoundError(`No event wih id: ${eventId}`)
+    }
     checkPermission(req.user, event.createdBy);
     await event.remove();
     res.status(StatusCodes.CREATED).json({msg: "Event deleted"});

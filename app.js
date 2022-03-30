@@ -1,7 +1,7 @@
-// In the paackage.json, I added more script 
+// In the package.json, I added more script 
 
 // you can start both the server and client together now
-// I hope it works after you use moongose or sth
+// I hope it works after you use mongoose or sth
 
 require('express-async-errors');
 require('dotenv').config();

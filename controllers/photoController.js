@@ -1,7 +1,7 @@
 const Photo = require('../models/photographs')
 const {StatusCodes} = require('http-status-codes');
 const { checkPermission } = require('../utils');
-const { BadRequestError } = require('../errors');
+const { BadRequestError, NotFoundError } = require('../errors');
 const path = require('path')
 
 const createPhoto = async (req, res) => { 
@@ -13,6 +13,9 @@ const createPhoto = async (req, res) => {
 const getSinglePhoto = async (req, res) => {
     const {id: photoId} = req.params;
     const photo = await Photo.findOne({_id: photoId})
+    if(!photo){
+        throw new NotFoundError(`No photo wih id: ${photoId}`)
+    }
     res.status(StatusCodes.OK).json({photo})
 }
 
@@ -20,6 +23,9 @@ const getSinglePhoto = async (req, res) => {
 const getSinglePersonPhotos = async (req, res) => {
     const {id: userId} = req.params;
     const photo = await Photo.find({user: userId});
+    if(!photo){
+        throw new NotFoundError(`No photo wih id: ${photoId}`)
+    }
     res.status(StatusCodes.OK).json({photo})
 }
 
@@ -49,6 +55,9 @@ const updatePhoto = async (req, res) => {
     const {image, name, description, category } = req.body;
     const {id: photoId} = req.params;
     const photo = await Photo.findOne({_id: photoId})
+    if(!photo){
+        throw new NotFoundError(`No photo wih id: ${photoId}`)
+    }
     checkPermission(req.user, photo.user);
     photo.image = image;
     photo.description  = description;
@@ -61,6 +70,9 @@ const updatePhoto = async (req, res) => {
 const deletePhoto = async (req, res) => { 
     const {id: photoId} = req.params;
     const photo = await Photo.findById(photoId)
+    if(!photo){
+        throw new NotFoundError(`No photo wih id: ${photoId}`)
+    }
     checkPermission(req.user, photo.user)
     await photo.remove();
     res.status(StatusCodes.OK).json({msg: 'Photo deleted successfully'})
