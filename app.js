@@ -77,7 +77,7 @@ app.use(errorHandlerMiddleware)
 app.use(notFoundErrorMiddleware)
 
 
-const port = 3000 || process.env.PORT;
+const port = 5000 || process.env.PORT;
 const start = async() => {
     try {
         await connectDB(process.env.MONGO_URL)
