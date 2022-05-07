@@ -1,0 +1,15 @@
+.book__hero{
+    width: 60%;
+    margin: 3% auto;
+    text-align: center
+}
+.intro{
+    width: 60%;
+}
+
+@media(max-width: 480px){
+    .intro{
+        width: 100%
+    }
+
+}

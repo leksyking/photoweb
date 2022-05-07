@@ -1,0 +1,32 @@
+.post{
+  border: 1px solid #C4C4C4;
+
+}
+.post__header{
+  padding: 5px;
+}
+.post__input input{
+  height: 40px;
+  font-size: 15px;
+}
+.sidebar{
+  margin-top: 3%;
+  position: fixed;
+}
+@media(max-width: 480px){
+  .sidebar{
+    margin-top: 0;
+    position: relative;
+  }
+  .follow__details{
+    margin-top: 6px;
+  }
+  .footer{
+    padding-bottom: 5%;
+  }
+}
+@media(max-width: 768px){
+  .follow__pics{
+    margin-top: 6px
+  }
+}

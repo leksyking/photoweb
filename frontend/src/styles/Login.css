@@ -1,0 +1,21 @@
+.login{
+    padding-top: 5%;
+    width: 100%;
+    margin: auto;
+}
+/* smal devices */
+@media(max-width: 480px){
+    .login{
+        width: 80%;
+        padding-top: 25%;
+    }
+}
+/* smallest devices */
+@media(max-width: 320px){
+    .login{
+        width: 96%;
+    }
+    form{
+        box-shadow: none;
+    }
+}

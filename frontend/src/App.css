@@ -1,0 +1,91 @@
+.app{
+  margin: 0 10%;
+}
+.body{
+  padding: 5% 15% 0 15%;
+  font-size: 12px;
+  
+}
+.pm__links{
+  color: #434343;
+  font-weight: bold;
+}
+.btn__follow{
+  color: #fff;
+  background-color: rgb(30, 28, 173);
+  border-radius: 2px;
+  font-weight: bold;
+  padding: 3px 5px;
+  margin-left: 30px;
+  margin-top: 5px;
+}
+.profile__follow,
+.profile__message{
+  color: #000;
+  border: 1px solid rgb(194, 193, 193);
+  border-radius: 2px;
+  margin-top: 5px;
+
+}
+.profile__message{
+  padding: 5px 20px;
+}
+
+.profile__follow{
+  padding: 5px 28px;
+}
+.overlay{
+  opacity: 0;
+  transition: .5s ease-in-out;
+}
+.overlay:hover{
+  z-index: 2;
+  opacity: 1;
+}
+.bg__overlay{
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  left:0;
+  width: 100%;
+  height: 100%
+
+}
+/* MEDIA QUERIES  */
+@media (max-width: 547px) { 
+  .gallery__img{
+    height: 163px !important;
+  }
+  input{
+    margin-bottom: 15px;
+  }
+  
+}
+@media (max-width: 768px) { 
+  .body{
+    padding: 10% 10% 0 10%;
+  }
+  .profile__picture{
+    height: 150px !important
+  }
+  
+ }
+ @media (max-width: 480px) { 
+   .body{
+     padding-top: 12%;
+   }
+   .post{
+     border: none !important;
+   }
+ }
+@media (max-width: 1024px) { 
+  .profile__picture{
+    height: 200px !important
+  }
+  .gallery__img{
+    height: 224px !important;
+  }
+ }
+ @media (max-width: 1680px) { 
+ 
+  }

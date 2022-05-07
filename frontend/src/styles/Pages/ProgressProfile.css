@@ -1,0 +1,6 @@
+.shoot__type{
+    border: 1px solid rgb(212, 212, 212);
+    padding: 20px 40px;
+    border-radius: 5px;
+    /* box-shadow: 2px 2px 10px rgb(146, 145, 145); */
+}
