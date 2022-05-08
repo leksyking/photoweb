@@ -20,7 +20,6 @@ const getCurrentUser = async (req, res) => {
 }
 
 const coverImage = async (req, res) => {
-    console.log(__dirname);
     if(!req.files){
         throw new NotFoundError("Please select a file.")
     }
@@ -34,7 +33,7 @@ const coverImage = async (req, res) => {
     }
     let coverImageURL = path.join(__dirname, "../images/coverImages/" + `${coverImage.name}`)
     await coverImage.mv(coverImageURL);
-    res.status(StatusCodes.OK).json({"cover image": `/coverImages/${coverImage.name}`})
+    res.status(StatusCodes.OK).json({coverImage: `/coverImages/${coverImage.name}`})
 }
 
 const updateUser = async (req, res) => {
