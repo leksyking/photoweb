@@ -7,7 +7,7 @@ const passport = require('passport')
 //google controller
 const google = passport.authenticate('google', { scope: ['profile'] });
 
-const googleNext = passport.authenticate('google', { failureRedirect: '/login' })
+const googleNext = passport.authenticate('google', { failureRedirect: '/api/v1/auth/login' })
 const funcNext =  function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/');
