@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Formik, FormikProps } from 'formik';
 import { Steps, StepsProvider, useSteps } from 'react-step-builder';
 import Confirm from './Confirm';
@@ -5,6 +6,7 @@ import Personal from './Personal';
 import ShotDetails from './ShotDetails';
 import Socials from './Socials';
 import * as Yup from 'yup';
+import axios from 'axios'
 
 const UserMultiForm = () => {
 	return (
@@ -32,6 +34,7 @@ interface multiFormProps {
 }
 const MySteps = () => {
 	const { next, prev } = useSteps();
+	const [formFailed, setFormFailed] = useState(false);
 
 	const nextProps = {
 		next: next,
@@ -84,6 +87,21 @@ const MySteps = () => {
 
 	const handleSubmit = (values: multiFormProps) => {
 		console.log({ values });
+		try {
+			const res = axios.post('http://localhost:5000/api/v1/auth/login', values, {
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+				},
+			});
+
+			if(!res){
+				setFormFailed(true)
+			}
+			setFormFailed(false);
+		} catch (error) {
+			setFormFailed(true);
+		}
 	};
 
 	return (
@@ -98,7 +116,7 @@ const MySteps = () => {
 				return (
 					<Steps>
 						<Personal {...nextProps} {...prevProps} values={values} />
-						<ShotDetails {...nextProps} {...prevProps} />
+						<ShotDetails {...nextProps} {...prevProps} values={values} />
 						<Socials {...nextProps} {...prevProps} values={values} />
 						<Confirm {...nextProps} {...prevProps} />
 					</Steps>

@@ -39,10 +39,10 @@ const Socials = ({ next, prev, values }: multiProps) => {
 				</div>
 			</div>
 			<div className='flex flex-cols justify-between mt-5 align-center'>
-				<ButtonWhite onClick={prev} disabled={true}>
+				<ButtonWhite onClick={prev} disabled={true} type="text">
 					Prev
 				</ButtonWhite>
-				<ButtonWhite onClick={next} disabled={false}>
+				<ButtonWhite onClick={next} disabled={false} type="text">
 					Next
 				</ButtonWhite>
 			</div>
