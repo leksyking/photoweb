@@ -7,7 +7,7 @@ const authenticationMiddleware = require('../middlewares/authentication')
 router.patch('/update-password', authenticationMiddleware, updateUserPassword)
 router.get('/getCurrentUser', authenticationMiddleware, getCurrentUser)
 router.patch('/update-user', authenticationMiddleware, updateUser)
-router.post('cover-image', authenticationMiddleware, coverImage)
+router.post('/cover-image', authenticationMiddleware, coverImage)
 router.get('/:id', authenticationMiddleware, getSingleUser)
 
 

@@ -4,7 +4,7 @@
   "description": "An API for a photography website ",
   "main": "app.js",
   "scripts": {
-    "server": "node app.js",
+    "server": "nodemon app.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },

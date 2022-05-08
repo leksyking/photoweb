@@ -1,6 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
 const {NotFoundError, BadRequestError, UnAuthenticatedError} = require('../errors');
 const User = require('../models/user');
+const path = require('path')
 const { createTokenUser, attachCookiesToResponse, checkPermission } = require('../utils');
 
 
@@ -19,7 +20,21 @@ const getCurrentUser = async (req, res) => {
 }
 
 const coverImage = async (req, res) => {
-
+    console.log(__dirname);
+    if(!req.files){
+        throw new NotFoundError("Please select a file.")
+    }
+    const coverImage = req.files.image
+    if (!coverImage.mimetype.startsWith("image")){
+        throw new BadRequestError("Please upload a valid image")
+    }
+    let imageSize = 1024*1024;
+    if (coverImage.size > imageSize){
+        throw new BadRequestError("Image should not be mre than 1MB")
+    }
+    let coverImageURL = path.join(__dirname, "../images/coverImages/" + `${coverImage.name}`)
+    await coverImage.mv(coverImageURL);
+    res.status(StatusCodes.OK).json({"cover image": `/coverImages/${coverImage.name}`})
 }
 
 const updateUser = async (req, res) => {
