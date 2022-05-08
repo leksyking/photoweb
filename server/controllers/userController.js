@@ -18,6 +18,10 @@ const getCurrentUser = async (req, res) => {
     res.status(StatusCodes.OK).json(req.user)
 }
 
+const coverImage = async (req, res) => {
+
+}
+
 const updateUser = async (req, res) => {
     const user = await User.findOneAndUpdate({_id: req.user.userId}, req.body, {new: true, runValidators: true})
     const tokenUser = createTokenUser(user);
@@ -43,7 +47,7 @@ const updateUserPassword = async (req, res) => {
 
 
 module.exports = {
-  
+    coverImage,
     getCurrentUser,
     updateUser,
     updateUserPassword,

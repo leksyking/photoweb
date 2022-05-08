@@ -54,7 +54,7 @@ app.use(passport.session());
 require('./passport/google')
 
 //middlewares
-app.use(express.static('./frontend/public'))
+app.use(express.static('../frontend/public'))
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_ENV))
 app.use(uploadFile())
