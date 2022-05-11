@@ -1,7 +1,7 @@
 {
   "name": "photoweb",
   "version": "1.0.0",
-  "description": "an API for a photography website ",
+  "description": "An API for a photography website ",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",

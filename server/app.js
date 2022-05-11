@@ -39,7 +39,7 @@ const connectDB = require('./db/connectdb')
 
 app.use(express.urlencoded({extended: true}))
 app.use(session({
-    secret: 'eksy',
+    secret: 'leksy',
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
@@ -54,7 +54,7 @@ app.use(passport.session());
 require('./passport/google')
 
 //middlewares
-app.use(express.static('./public'))
+app.use(express.static('../frontend/public'))
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_ENV))
 app.use(uploadFile())

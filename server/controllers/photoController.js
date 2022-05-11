@@ -36,7 +36,7 @@ const getAllPhotos = async (req, res) => {
 
 const uploadPhoto = async (req, res) => {
     if(!req.files){
-        throw BadRequestError('Please upload a file')
+        throw new NotFoundError("Please select a file.")
     }
     const uploadedFile = req.files.image;
     if(!uploadedFile.mimetype.startsWith('image')){
@@ -46,7 +46,7 @@ const uploadPhoto = async (req, res) => {
     if(uploadedFile.size > maxSize){
         throw new BadRequestError('Image should not be more than 1MB')
     }
-    const imagePath = path.join(__dirname, '../public/uploads/' + `${uploadedFile.name}`)
+    const imagePath = path.join(__dirname, '../images/uploads/' + `${uploadedFile.name}`)
     await uploadedFile.mv(imagePath)
     res.status(StatusCodes.OK).json({image: `/uploads/${uploadedFile.name}`})
 }
