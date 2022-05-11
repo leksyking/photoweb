@@ -38,12 +38,13 @@ const Confirm = ({ next, prev }: multiProps) => {
 				</label>
 			</div>
 			<div className='flex flex-cols justify-between mt-5 align-center'>
-				<ButtonWhite onClick={prev} disabled={true}>
+				<ButtonWhite onClick={prev} disabled={true} type="text">
 					Prev
 				</ButtonWhite>
-				<ButtonWhite onClick={next} disabled={false}>
+				<ButtonWhite onClick={next} disabled={false} type="text">
 					Next
 				</ButtonWhite>
+				<button className='text-black font-bold' type='submit'> Submit</button>
 			</div>
 		</div>
 	);

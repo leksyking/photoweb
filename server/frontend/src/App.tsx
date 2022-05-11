@@ -5,7 +5,8 @@ import HomePage from './Pages/Home';
 import LoginPage from './Pages/Login';
 import RegisterPage from './Pages/Register';
 import Nav from './components/Nav';
-import MultiFormUser from './components/multiform'
+import MultiFormUser from './components/multiform';
+import Profile from './Pages/PhotographerProfile';
 
 // import ProgressProfile from "./Pages/ProgressProfile";
 // import ProgressProfile2 from "./Pages/ProgressProfile2";
@@ -14,7 +15,6 @@ import MultiFormUser from './components/multiform'
 // import BookPage1 from "./Pages/BookPage1";
 
 function App() {
-	
 	return (
 		<Router>
 			<Nav />
@@ -28,9 +28,12 @@ function App() {
 				<Route path='/register'>
 					<RegisterPage />
 				</Route>
-				
+
 				<Route path='/register-full'>
-					<MultiFormUser/>
+					<MultiFormUser />
+				</Route>
+				<Route path='/photographer'>
+					<Profile />
 				</Route>
 
 				{/* <Route path='/profile'>
